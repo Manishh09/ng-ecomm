@@ -1,15 +1,16 @@
-     @for (item of cartItems(); track $index) {
-        <div class="bg-white shadow-md border rounded-xl p-6 flex flex-row gap-6 relative ">
+         <div class="bg-white shadow-md border rounded-xl p-6 flex flex-row gap-6 relative ">
             <div>
-                <img [src]="cartItem()?.image" alt="image" class="w-[200px] h-[100px] object-contain"/>
+                <img [src]="cartItem().image" alt="image" class="w-[200px] h-[100px] object-contain"/>
             </div>
             <div class="px-2 flex flex-col   justify-center">
-                <span class="text-md font-bold">{{cartItem()?.title}}</span>
-                <span class="text-md ">{{cartItem()?.price | currency: 'USD':'symbol'}}</span>
+                <span class="text-md font-bold">{{cartItem().title}}</span>
+                <span class="text-md ">{{cartItem().price | currency: 'USD':'symbol'}}</span>
             </div>
-        </div>
-     }
-     
-     
+              <app-button [label]="'Remove'" (buttonClicked)="cartService.removeFromCart(cartItem())"></app-button>
 
- 
+        </div>
+
+
+
+
+

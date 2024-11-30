@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductCardComponent } from "./product-card/product-card.component";
+import { ProductsService } from '../../service/products.service';
 
 @Component({
   selector: 'app-product-list',
@@ -8,48 +9,37 @@ import { ProductCardComponent } from "./product-card/product-card.component";
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
-export class ProductListComponent {
-products = signal<Product[]>([
+export class ProductListComponent implements OnInit {
 
-  {
-    "id": 1,
-    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-    "price": 109.95,
-    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    "stock":10
-  },
-  {
-    "id": 2,
-    "title": "Mens Casual Premium Slim Fit T-Shirts ",
-    "price": 22.3,
-
-    "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-"stock":10
-  },
-  {
-    "id": 3,
-    "title": "Mens Cotton Jacket",
-    "price": 55.99,
-
-    "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-"stock":5
-  },
-  {
-    "id": 4,
-    "title": "Mens Casual Slim Fit",
-    "price": 15.99,
-
-    "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
-"stock":0
-  },
-  {
-    "id": 5,
-    "title": "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
-    "price": 695,
+categories = ['electronics', 'books', 'clothing'];
+selectedCategory = signal<string>('electronics');
 
 
-    "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
-    stock:100
-  },
-])
+ngOnInit(): void {
+  this.getProductsByCategory();
+}
+
+onCategoryChange(category: string) {
+  this.selectedCategory.set(category);
+  this.getProductsByCategory();
+}
+
+productService = inject(ProductsService)
+products = signal<Product[]>([]);
+
+
+
+getProducts(){
+  this.productService.getProducts().subscribe((products:Product[])=>{
+    this.products.set(products);
+  })
+}
+
+getProductsByCategory(){
+  this.productService.getProductsByCategory('electronics').subscribe((products: any)=>{
+    this.products.set(products);
+  })
+}
+
+
 }

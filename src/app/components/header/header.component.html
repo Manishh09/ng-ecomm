@@ -2,6 +2,10 @@
 
   <span class="text-xl"> {{title()}}</span>
 
-  <app-primary-button [label]="buttonLabel()" (buttonClicked)="showButtonClicked()" />
+  <app-primary-button [label]="buttonLabel()" (buttonClicked)="showButtonClicked()" 
+
+  [routerLink]="['/cart']" 
+  
+  />
 
 </div>

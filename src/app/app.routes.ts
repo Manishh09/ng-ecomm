@@ -1,9 +1,17 @@
 import { Routes } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
+import { ProductListComponent } from './pages/product-list/product-list.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 export const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: HeaderComponent
-  // }
+  {
+    path: '',
+    pathMatch: 'full',
+    component: ProductListComponent
+  },
+
+  {
+    path: 'cart',
+    component: CartComponent
+  }
 ];
